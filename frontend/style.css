@@ -1,0 +1,48 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  margin: 40px;
+}
+
+h1 {
+  color: #333;
+}
+
+input, select, button {
+  padding: 8px;
+  margin: 5px 0;
+}
+
+button {
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+li {
+  background: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.badge {
+  padding: 4px 10px;
+  border-radius: 5px;
+  color: white;
+  font-size: 12px;
+}
+
+.High { background: #dc3545; }
+.Medium { background: #ffc107; color: black; }
+.Low { background: #28a745; }
+
+.status {
+  font-weight: bold;
+}

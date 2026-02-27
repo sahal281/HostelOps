@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<style>
+body{
+  font-family:Arial;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  background:#f4f6f9;
+}
+.card{
+  background:white;
+  padding:40px;
+  text-align:center;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+button{
+  padding:15px 30px;
+  margin:10px;
+  font-size:16px;
+  border:none;
+  cursor:pointer;
+  border-radius:6px;
+}
+.student{ background:#007bff;color:white;}
+.admin{ background:#28a745;color:white;}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>HostelOps Login</h2>
+
+<p>Select Role</p>
+
+<button class="student" onclick="login('student')">Student</button>
+<button class="admin" onclick="login('admin')">Admin</button>
+
+</div>
+
+<script>
+function login(role){
+  localStorage.setItem("role", role);
+  window.location.href="index.html";
+}
+</script>
+
+</body>
+</html>

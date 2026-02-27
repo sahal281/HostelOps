@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>HostelOps</title>
+</head>
+
+<body>
+
+<script>
+if(!localStorage.getItem("role")){
+    window.location.href="login.html";
+}
+</script>
+
+<h1>Hostel Complaint System</h1>
+
+<button onclick="logout()" style="float:right;">Logout</button>
+
+<h3>Submit Complaint</h3>
+
+<input type="text" id="title" placeholder="Title" />
+<input type="text" id="description" placeholder="Description" />
+
+<select id="priority">
+    <option>Low</option>
+    <option>Medium</option>
+    <option>High</option>
+</select>
+
+<button onclick="submitComplaint()">Submit</button>
+
+<h3 id="filterTitle">Filter by Status</h3>
+
+<select id="filter" onchange="loadComplaints()">
+    <option value="All">All</option>
+    <option value="Pending">Pending</option>
+    <option value="Resolved">Resolved</option>
+</select>
+
+<h3>Complaints</h3>
+<ul id="list"></ul>
+
+<script src="script.js"></script>
+
+</body>
+</html>
