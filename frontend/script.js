@@ -33,9 +33,9 @@ async function loadComplaints() {
 
                 ${
                     role === "admin" && c.status !== "Resolved"
-                    ? `<button onclick="resolveComplaint('${c._id}')">Mark Resolved</button>`
+                    ? `<button class="btn btn-primary" onclick="resolveComplaint('${c._id}')">Mark Resolved</button>`
                     : role === "admin" && c.status === "Resolved"
-                    ? `<span style="color:green;font-weight:bold;">✔ Resolved</span>`
+                    ? `<span style="color:var(--success);font-weight:bold;">✔ Resolved</span>`
                     : ""
                 }
             </li>

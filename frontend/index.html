@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="style.css">
     <title>HostelOps</title>
 </head>
@@ -13,33 +14,56 @@ if(!localStorage.getItem("role")){
 }
 </script>
 
-<h1>Hostel Complaint System</h1>
+<header class="header">
+    <h1>Hostel Complaint System</h1>
+    <div>
+        <button class="btn btn-ghost logout" onclick="logout()">Logout</button>
+    </div>
+</header>
 
-<button onclick="logout()" style="float:right;">Logout</button>
+<main class="container">
+    <section class="card">
+        <h3 style="margin-top:0">Submit Complaint</h3>
 
-<h3>Submit Complaint</h3>
+        <div class="form-group">
+            <input type="text" id="title" placeholder="Title" />
+        </div>
 
-<input type="text" id="title" placeholder="Title" />
-<input type="text" id="description" placeholder="Description" />
+        <div class="form-group">
+            <textarea id="description" placeholder="Description"></textarea>
+        </div>
 
-<select id="priority">
-    <option>Low</option>
-    <option>Medium</option>
-    <option>High</option>
-</select>
+        <div class="form-group">
+            <select id="priority">
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+            </select>
+        </div>
 
-<button onclick="submitComplaint()">Submit</button>
+        <div class="form-group">
+            <button class="btn btn-primary" onclick="submitComplaint()">Submit</button>
+        </div>
+    </section>
 
-<h3 id="filterTitle">Filter by Status</h3>
+    <section class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+            <h3 style="margin:0">Complaints</h3>
+            <div>
+                <label id="filterTitle" style="margin-right:8px;color:var(--muted);font-weight:600">Filter</label>
+                <select id="filter" onchange="loadComplaints()">
+                    <option value="All">All</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Resolved">Resolved</option>
+                </select>
+            </div>
+        </div>
 
-<select id="filter" onchange="loadComplaints()">
-    <option value="All">All</option>
-    <option value="Pending">Pending</option>
-    <option value="Resolved">Resolved</option>
-</select>
-
-<h3>Complaints</h3>
-<ul id="list"></ul>
+        <div class="complaints">
+            <ul id="list"></ul>
+        </div>
+    </section>
+</main>
 
 <script src="script.js"></script>
 

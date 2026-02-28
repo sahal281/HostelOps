@@ -1,46 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Login</title>
-<style>
-body{
-  font-family:Arial;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  background:#f4f6f9;
-}
-.card{
-  background:white;
-  padding:40px;
-  text-align:center;
-  border-radius:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.2);
-}
-button{
-  padding:15px 30px;
-  margin:10px;
-  font-size:16px;
-  border:none;
-  cursor:pointer;
-  border-radius:6px;
-}
-.student{ background:#007bff;color:white;}
-.admin{ background:#28a745;color:white;}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="card">
-<h2>HostelOps Login</h2>
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(180deg,var(--bg),#ffffff)">
+  <div class="card" style="max-width:420px;text-align:center">
+    <h2 style="margin-top:0">HostelOps Login</h2>
+    <p style="color:var(--muted)">Select your role to continue</p>
 
-<p>Select Role</p>
-
-<button class="student" onclick="login('student')">Student</button>
-<button class="admin" onclick="login('admin')">Admin</button>
-
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:18px">
+      <button class="btn btn-primary" onclick="login('student')">Student</button>
+      <button class="btn btn-ghost" onclick="login('admin')">Admin</button>
+    </div>
+  </div>
 </div>
 
 <script>
