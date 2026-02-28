@@ -4,28 +4,109 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Login</title>
 <link rel="stylesheet" href="style.css">
+<style>
+  .login-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; background: linear-gradient(180deg, var(--bg), #ffffff); }
+  .login-card { max-width: 420px; text-align: center; }
+  .login-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid #e6e9ef; }
+  .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; cursor: pointer; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .login-form { display: none; }
+  .login-form.active { display: block; }
+  .error-msg { color: var(--danger); font-size: 13px; margin-top: 8px; }
+  .success-msg { color: var(--success); font-size: 13px; margin-top: 8px; }
+</style>
 </head>
 
 <body>
 
-<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(180deg,var(--bg),#ffffff)">
-  <div class="card" style="max-width:420px;text-align:center">
-    <h2 style="margin-top:0">HostelOps Login</h2>
-    <p style="color:var(--muted)">Select your role to continue</p>
+<div class="login-container">
+  <div class="card login-card">
+    <h2 style="margin-top: 0">HostelOps Login</h2>
+    
+    <div class="login-tabs">
+      <button class="tab-btn active" onclick="switchTab('student')">Student</button>
+      <button class="tab-btn" onclick="switchTab('admin')">Admin</button>
+    </div>
 
-    <div style="display:flex;gap:12px;justify-content:center;margin-top:18px">
-      <button class="btn btn-primary" onclick="login('student')">Student</button>
-      <button class="btn btn-ghost" onclick="login('admin')">Admin</button>
+    <!-- Student Login -->
+    <div class="login-form active" id="student-form">
+      <p style="color: var(--muted)">Continue as student</p>
+      <button class="btn btn-primary" style="width: 100%; margin-top: 12px;" onclick="login('student')">Continue</button>
+    </div>
+
+    <!-- Admin Login -->
+    <div class="login-form" id="admin-form">
+      <div class="form-group" style="margin-top: 12px;">
+        <input type="text" id="admin-username" placeholder="Username" />
+      </div>
+      <div class="form-group">
+        <input type="password" id="admin-password" placeholder="Password" />
+      </div>
+      <div id="auth-message"></div>
+      <button class="btn btn-primary" style="width: 100%; margin-top: 12px;" onclick="adminLogin()">Login</button>
     </div>
   </div>
 </div>
 
 <script>
-function login(role){
-  localStorage.setItem("role", role);
-  window.location.href="index.html";
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.login-form').forEach(form => form.classList.remove('active'));
+  
+  event.target.classList.add('active');
+  document.getElementById(tab + '-form').classList.add('active');
+  document.getElementById('auth-message').innerHTML = '';
 }
+
+function login(role) {
+  localStorage.setItem("role", role);
+  window.location.href = "index.html";
+}
+
+async function adminLogin() {
+  const username = document.getElementById('admin-username').value.trim();
+  const password = document.getElementById('admin-password').value;
+  const messageDiv = document.getElementById('auth-message');
+  
+  // Client-side validation
+  if (!username || !password) {
+    messageDiv.innerHTML = '<div class="error-msg">Please enter both username and password</div>';
+    return;
+  }
+  
+  try {
+    const response = await fetch('/api/auth/admin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      messageDiv.innerHTML = '<div class="success-msg">Authentication successful!</div>';
+      setTimeout(() => {
+        localStorage.setItem("role", "admin");
+        window.location.href = "index.html";
+      }, 500);
+    } else {
+      messageDiv.innerHTML = '<div class="error-msg">' + (data.message || 'Authentication failed') + '</div>';
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    messageDiv.innerHTML = '<div class="error-msg">Connection error. Please try again.</div>';
+  }
+}
+
+// Allow Enter key to submit admin login
+document.addEventListener('DOMContentLoaded', () => {
+  const passwordInput = document.getElementById('admin-password');
+  if (passwordInput) {
+    passwordInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') adminLogin();
+    });
+  }
+});
 </script>
 
 </body>
-</html>
